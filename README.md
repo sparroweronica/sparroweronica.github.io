@@ -1,3 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подарок для мамы</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Подсказка для перетаскивания -->
+    <div class="drag-hint" id="drag-hint">Перетащи цветок в вазу 💫</div>
+
+    <!-- ЭКРАН 1: Начальный -->
+    <div id="screen-intro" class="screen active">
+        <div class="intro-container">
+            <div class="daughter-section">
+                <img src="images/daughter-photo.jpg" alt="Дочка" class="daughter-photo real-image">
+                <div class="debug-info">images/daughter-photo.jpg</div>
+                <p class="speech-text">эмм...мам...нуу...мамуль...ну вобщем это тебе...</p>
+            </div>
+            <div class="gift-section">
+                <img src="images/gift-box.png" alt="Подарок" class="gift-box real-image shaking" id="gift-box">
+                <div class="debug-info">images/gift-box.png</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: Букет в обертке -->
+    <div id="screen-bouquet-wrapped" class="screen">
+        <p class="instruction">Раскрой упаковку и узнай что подарочек хочет тебе сказать</p>
+        <div class="bouquet-container">
+            <img src="images/bouquet-wrapped.png" alt="Букет в обертке" class="bouquet-wrapped real-image" id="bouquet-wrapped">
+            <div class="debug-info">images/bouquet-wrapped.png</div>
+            <img src="images/ribbon.png" alt="Ленточка" class="ribbon real-image shaking" id="ribbon">
+            <div class="debug-info">images/ribbon.png</div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 3: Цветы без обертки -->
+    <div id="screen-bouquet-unwrapped" class="screen">
+        <p class="instruction">Нажми на цветочек! А после перетащи его в вазу</p>
+        <div class="flowers-container" id="flowers-container">
+            <!-- Цветки будут добавляться скриптом -->
+        </div>
+        <img src="images/vase.png" alt="Ваза" class="vase real-image" id="vase">
+        <div class="debug-info">images/vase.png</div>
+    </div>
+
+    <!-- ЭКРАН 4: Финальный букет -->
+    <div id="screen-final" class="screen">
+        <p class="final-message">Воть твой букетик! Он красивый и многогранный, как и ты!</p>
+        
+        <!-- Контейнер для фраз -->
+        <div class="phrases-container" id="phrases-container">
+            <!-- Фразы будут добавляться скриптом -->
+        </div>
+        
+        <!-- Финальное изображение букета -->
+        <div class="final-image-container">
+            <img src="images/vase-with-flowers.png" alt="Ваза с цветами" id="final-bouquet-image" class="real-image">
+            <div class="debug-info">images/vase-with-flowers.png</div>
+        </div>
+    </div>
+
+    <!-- Карточка описания цветка -->
+    <div id="flower-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="flower-title">Название цветка</h2>
+            <p id="flower-description">Описание цветка появится здесь</p>
+            <button id="move-to-vase-btn">Готово! Теперь перетащи цветок в вазу</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
 // Данные о цветках с реальными изображениями
 const flowersData = [
     {
