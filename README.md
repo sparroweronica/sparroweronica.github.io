@@ -515,3 +515,385 @@ document.addEventListener('touchmove', function(e) {
 
 console.log('🎁 Приложение инициализировано и готово к работе!');
 
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --soft-pink: #ffe8e8;
+    --cream: #f5f5dc;
+    --warm-brown: #5a4a3a;
+    --accent-gold: #d4a574;
+    --success-green: #90a955;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, var(--soft-pink), var(--cream));
+    color: var(--warm-brown);
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+    touch-action: manipulation;
+}
+
+/* Временные стили для отладки изображений */
+.debug-info {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 5px;
+    font-size: 10px;
+    border-radius: 3px;
+    display: none;
+}
+
+/* Стили для финального экрана */
+.phrases-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+    max-width: 500px;
+    width: 90%;
+}
+
+.phrase-item {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-size: 1.1em;
+    line-height: 1.4;
+    text-align: center;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.phrase-item:nth-child(even) {
+    background: rgba(212, 165, 116, 0.1);
+}
+
+.final-image-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+#final-bouquet-image {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Индикатор перетаскивания */
+.drag-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    z-index: 3000;
+    animation: fadeIn 0.3s ease-out;
+    display: none;
+}
+
+/* Адаптивность для iPhone */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .instruction {
+        font-size: 1.1em !important;
+    }
+}
+
+/* Общие стили экранов */
+.screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Анимация тряски */
+@keyframes gentleShake {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-2px) rotate(-0.5deg); }
+    75% { transform: translateX(2px) rotate(0.5deg); }
+}
+
+.shaking {
+    animation: gentleShake 0.8s ease-in-out infinite;
+    cursor: pointer;
+}
+
+/* Плавные переходы */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* ЭКРАН 1: Начальный */
+.intro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    animation: fadeIn 1s ease-out;
+}
+
+.daughter-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.daughter-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-gold);
+}
+
+.speech-text {
+    font-style: italic;
+    font-size: 1.4em;
+    margin-top: 10px;
+    color: #8b4513;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.gift-box {
+    width: 220px;
+    height: 220px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.gift-box:active {
+    transform: scale(0.95);
+}
+
+/* ЭКРАН 2: Букет в обертке */
+.instruction {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    color: var(--warm-brown);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px 25px;
+    border-radius: 25px;
+    backdrop-filter: blur(5px);
+}
+
+.bouquet-container {
+    position: relative;
+    display: inline-block;
+}
+
+.bouquet-wrapped {
+    width: 350px;
+    height: 420px;
+    border-radius: 20px;
+}
+
+.ribbon {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* ЭКРАН 3: Цветы без обертки */
+.flowers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 50px;
+    position: relative;
+    min-height: 200px;
+}
+
+.flower {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    border: 3px solid transparent;
+}
+
+.flower.shaking {
+    animation: gentleShake 0.6s ease-in-out infinite;
+}
+
+.flower.selected {
+    border: 3px dashed var(--accent-gold);
+    background-color: rgba(212, 165, 116, 0.1);
+}
+
+.flower.dragging {
+    cursor: grabbing;
+    transform: scale(1.1) rotate(5deg);
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.flower.in-vase {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.vase {
+    width: 220px;
+    height: 220px;
+    border-radius: 10px;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.vase.drop-target {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(212, 165, 116, 0.4);
+    transform: scale(1.05);
+}
+
+/* ЭКРАН 4: Финальный */
+.final-message {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: var(--warm-brown);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px 30px;
+    border-radius: 30px;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease-out;
+    border: 3px solid var(--accent-gold);
+}
+
+#flower-title {
+    color: var(--warm-brown);
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+#flower-description {
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    color: #666;
+}
+
+#move-to-vase-btn {
+    padding: 12px 25px;
+    background: var(--success-green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#move-to-vase-btn:hover {
+    background: #7d9944;
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+    .daughter-photo {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .gift-box {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .bouquet-wrapped {
+        width: 280px;
+        height: 350px;
+    }
+    
+    .flower {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .final-message {
+        font-size: 1.3em;
+        padding: 15px 20px;
+    }
+    
+    .vase {
+        width: 180px;
+        height: 180px;
+    }
+    
+    #final-bouquet-image {
+        max-width: 300px;
+    }
+}
