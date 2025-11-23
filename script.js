@@ -163,8 +163,38 @@ function showNextFlower() {
         currentFlower.classList.add('shaking');
         currentFlower.style.cursor = 'pointer';
         
+        // ВЕШАЕМ ОБРАБОТЧИКИ КЛИКА НА ЦВЕТОК
+        setupFlowerClickHandlers(currentFlower);
+        
         console.log(`🌺 Показываем цветок ${currentFlowerIndex + 1}`);
     }
+}
+
+// Функция для установки обработчиков на цветки
+function setupFlowerClickHandlers(flowerElement) {
+    // Удаляем старые обработчики (если есть)
+    const newFlowerElement = flowerElement.cloneNode(true);
+    flowerElement.parentNode.replaceChild(newFlowerElement, flowerElement);
+    
+    // Добавляем новые обработчики
+    newFlowerElement.addEventListener('click', function() {
+        const flowerId = parseInt(this.dataset.id);
+        const flowerData = flowersData.find(f => f.id === flowerId);
+        if (flowerData) {
+            openFlowerModal(flowerData);
+        }
+    });
+    
+    newFlowerElement.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        const flowerId = parseInt(this.dataset.id);
+        const flowerData = flowersData.find(f => f.id === flowerId);
+        if (flowerData) {
+            openFlowerModal(flowerData);
+        }
+    }, { passive: false });
+    
+    return newFlowerElement;
 }
 
 function openFlowerModal(flowerData) {
@@ -209,7 +239,7 @@ function showDragHint() {
     }, 3000);
 }
 
-// Система перетаскивания - УПРОЩЕННАЯ ВЕРСИЯ
+// Система перетаскивания
 function setupFlowerDrag(flowerElement) {
     let isDragging = false;
     let startX, startY;
