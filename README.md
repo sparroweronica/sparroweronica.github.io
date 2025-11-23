@@ -1041,7 +1041,8 @@ function showFinalBouquet() {
 // Сохранение букета
 function saveBouquet() {
     console.log('💾 Сохраняем букет...');
-    const element = document.getElementById('final-bouquet-container');
+    // const element = document.getElementById('final-bouquet-container');
+     const bouquetImage = document.getElementById('final-bouquet-image');
     
     html2canvas(element, {
         backgroundColor: null,
