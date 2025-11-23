@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подарок для мамы</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         /* Временные стили для отладки изображений */
         .debug-info {
@@ -52,7 +51,7 @@
         }
         
         #final-bouquet-image {
-            max-width: 300px;
+            max-width: 400px; /* Увеличил размер финального букета */
             width: 100%;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -130,7 +129,7 @@
             <div class="debug-info">images/vase-with-flowers.png</div>
         </div>
         
-        <button id="save-button">Сохранить букет</button>
+        <!-- Убрал кнопку сохранения -->
     </div>
 
     <!-- Карточка описания цветка -->
@@ -264,9 +263,6 @@
             
             // Модальное окно
             document.getElementById('move-to-vase-btn').addEventListener('click', prepareFlowerForMoving);
-            
-            // Сохранение
-            document.getElementById('save-button').addEventListener('click', saveBouquet);
             
             console.log('✅ Все обработчики событий установлены');
         }
@@ -526,36 +522,6 @@
             }, 300);
         }
 
-        // Функция для установки обработчиков на цветки (вызывается при показе цветка)
-        function setupFlowerClickHandlers() {
-            const flowers = document.querySelectorAll('.flower');
-            flowers.forEach((flower, index) => {
-                // Удаляем старые обработчики
-                flower.replaceWith(flower.cloneNode(true));
-                
-                // Получаем обновленный элемент
-                const newFlower = document.querySelectorAll('.flower')[index];
-                
-                // Добавляем новые обработчики
-                newFlower.addEventListener('click', function() {
-                    const flowerId = parseInt(this.dataset.id);
-                    const flowerData = flowersData.find(f => f.id === flowerId);
-                    if (flowerData) {
-                        openFlowerModal(flowerData);
-                    }
-                });
-                
-                newFlower.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    const flowerId = parseInt(this.dataset.id);
-                    const flowerData = flowersData.find(f => f.id === flowerId);
-                    if (flowerData) {
-                        openFlowerModal(flowerData);
-                    }
-                }, { passive: false });
-            });
-        }
-
         function showFinalBouquet() {
             console.log('🎉 Показываем финальный букет!');
             showScreen('screen-final');
@@ -571,84 +537,6 @@
                 phraseEl.style.animationDelay = `${index * 0.2}s`;
                 
                 phrasesContainer.appendChild(phraseEl);
-            });
-        }
-
-        function saveBouquet() {
-            console.log('💾 Сохраняем букет...');
-            
-            // Создаем временный контейнер для сохранения
-            const tempContainer = document.createElement('div');
-            tempContainer.style.position = 'absolute';
-            tempContainer.style.left = '-9999px';
-            tempContainer.style.background = 'linear-gradient(135deg, var(--soft-pink), var(--cream))';
-            tempContainer.style.padding = '40px 20px';
-            tempContainer.style.textAlign = 'center';
-            tempContainer.style.minHeight = '100vh';
-            tempContainer.style.display = 'flex';
-            tempContainer.style.flexDirection = 'column';
-            tempContainer.style.alignItems = 'center';
-            tempContainer.style.justifyContent = 'center';
-            
-            // Добавляем заголовок
-            const title = document.createElement('h1');
-            title.textContent = 'Букет для мамы';
-            title.style.color = 'var(--warm-brown)';
-            title.style.marginBottom = '30px';
-            title.style.fontFamily = 'Georgia, serif';
-            tempContainer.appendChild(title);
-            
-            // Добавляем фразы
-            const phrasesWrapper = document.createElement('div');
-            phrasesWrapper.className = 'phrases-container';
-            phrasesWrapper.style.maxWidth = '500px';
-            phrasesWrapper.style.marginBottom = '40px';
-            
-            flowersData.forEach(flower => {
-                const phraseEl = document.createElement('div');
-                phraseEl.className = 'phrase-item';
-                phraseEl.textContent = flower.phrase;
-                phraseEl.style.marginBottom = '15px';
-                phrasesWrapper.appendChild(phraseEl);
-            });
-            
-            tempContainer.appendChild(phrasesWrapper);
-            
-            // Добавляем изображение букета
-            const img = document.createElement('img');
-            img.src = 'images/vase-with-flowers.png';
-            img.alt = 'Ваза с цветами';
-            img.style.maxWidth = '300px';
-            img.style.width = '100%';
-            img.style.borderRadius = '20px';
-            img.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
-            tempContainer.appendChild(img);
-            
-            // Добавляем в DOM
-            document.body.appendChild(tempContainer);
-            
-            html2canvas(tempContainer).then(canvas => {
-                // Создаем временную ссылку для скачивания
-                const link = document.createElement('a');
-                link.download = 'букет-для-мамы.png';
-                link.href = canvas.toDataURL('image/png');
-                
-                // Программно кликаем по ссылке
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Убираем временный контейнер
-                document.body.removeChild(tempContainer);
-                
-                console.log('✅ Букет успешно сохранен!');
-                
-                // Показываем подтверждение
-                alert('Букет сохранен в галерею! 📸');
-            }).catch(error => {
-                console.error('❌ Ошибка при сохранении:', error);
-                alert('Произошла ошибка при сохранении. Попробуйте еще раз.');
-                document.body.removeChild(tempContainer);
             });
         }
 
@@ -1188,8 +1076,8 @@ body {
 }
 
 .daughter-photo {
-    width: 140px;
-    height: 140px;
+    width: 160px; /* Увеличил фото дочки */
+    height: 160px;
     border-radius: 50%;
     border: 4px solid var(--accent-gold);
 }
@@ -1206,8 +1094,8 @@ body {
 }
 
 .gift-box {
-    width: 180px;
-    height: 180px;
+    width: 220px; /* Увеличил подарок */
+    height: 220px;
     border-radius: 15px;
     transition: all 0.3s ease;
 }
@@ -1234,18 +1122,18 @@ body {
 }
 
 .bouquet-wrapped {
-    width: 280px;
-    height: 350px;
+    width: 350px; /* Увеличил букет в обертке */
+    height: 420px;
     border-radius: 20px;
 }
 
 .ribbon {
     position: absolute;
-    top: 30px;
+    top: 40px; /* Поднял ленточку */
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 30px;
+    width: 120px; /* Увеличил ленточку */
+    height: 40px;
     border-radius: 10px;
     cursor: pointer;
     z-index: 2;
@@ -1263,8 +1151,8 @@ body {
 }
 
 .flower {
-    width: 90px;
-    height: 90px;
+    width: 120px; /* Увеличил цветки */
+    height: 120px;
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1294,8 +1182,8 @@ body {
 }
 
 .vase {
-    width: 180px;
-    height: 180px;
+    width: 220px; /* Увеличил вазу */
+    height: 220px;
     border-radius: 10px;
     margin-top: 30px;
     transition: all 0.3s ease;
@@ -1328,22 +1216,22 @@ body {
 }
 
 .final-vase {
-    width: 220px;
-    height: 220px;
+    width: 280px; /* Увеличил финальную вазу */
+    height: 280px;
     border-radius: 15px;
 }
 
 .final-flower {
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 90px; /* Увеличил финальные цветки */
+    height: 90px;
     border-radius: 12px;
     transition: all 0.5s ease-out;
 }
 
 .flower-phrase {
     position: absolute;
-    top: -65px;
+    top: -35px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.95);
@@ -1354,28 +1242,6 @@ body {
     border: 2px solid var(--accent-gold);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     font-weight: 500;
-}
-
-#save-button {
-    padding: 15px 35px;
-    background: linear-gradient(45deg, var(--accent-gold), #b8860b);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-}
-
-#save-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-#save-button:active {
-    transform: translateY(0);
 }
 
 /* Модальное окно */
@@ -1445,31 +1311,32 @@ body {
 /* Адаптивность для очень маленьких экранов */
 @media (max-width: 480px) {
     .daughter-photo {
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
     }
     
     .gift-box {
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
     }
     
     .bouquet-wrapped {
-        width: 250px;
-        height: 300px;
+        width: 280px;
+        height: 350px;
     }
     
     .flower {
-        width: 75px;
-        height: 75px;
+        width: 100px;
+        height: 100px;
     }
     
     .final-message {
         font-size: 1.3em;
         padding: 15px 20px;
     }
+    
+    .vase {
+        width: 180px;
+        height: 180px;
+    }
 }
-
-
-
-
