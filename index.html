@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Подсказка для перетаскивания -->
+    
     <div class="drag-hint" id="drag-hint">Перетащи цветок в вазу 💫</div>
-
-    <!-- ЭКРАН 1: Начальный -->
     <div id="screen-intro" class="screen active">
         <div class="intro-container">
             <div class="daughter-section">
@@ -25,7 +23,7 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 2: Букет в обертке -->
+
     <div id="screen-bouquet-wrapped" class="screen">
         <p class="instruction">Раскрой упаковку и узнай что подарочек хочет тебе сказать</p>
         <div class="bouquet-container">
@@ -36,33 +34,30 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 3: Цветы без обертки -->
+
     <div id="screen-bouquet-unwrapped" class="screen">
         <p class="instruction">Нажми на цветочек! А после перетащи его в вазу</p>
         <div class="flowers-container" id="flowers-container">
-            <!-- Цветки будут добавляться скриптом -->
+
         </div>
         <img src="images/vase.png" alt="Ваза" class="vase real-image" id="vase">
         <div class="debug-info">images/vase.png</div>
     </div>
 
-    <!-- ЭКРАН 4: Финальный букет -->
     <div id="screen-final" class="screen">
         <p class="final-message">Воть твой букетик! Он красивый и многогранный, как и ты!</p>
         
-        <!-- Контейнер для фраз -->
+
         <div class="phrases-container" id="phrases-container">
-            <!-- Фразы будут добавляться скриптом -->
         </div>
         
-        <!-- Финальное изображение букета -->
+
         <div class="final-image-container">
             <img src="images/vase-with-flowers.png" alt="Ваза с цветами" id="final-bouquet-image" class="real-image">
             <div class="debug-info">images/vase-with-flowers.png</div>
         </div>
     </div>
 
-    <!-- Карточка описания цветка -->
     <div id="flower-modal" class="modal">
         <div class="modal-content">
             <h2 id="flower-title">Название цветка</h2>
@@ -74,3 +69,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
