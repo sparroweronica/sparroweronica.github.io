@@ -1,4 +1,4 @@
-// Данные о цветках с реальными изображениями
+
 const flowersData = [
     {
         id: 1,
@@ -44,29 +44,29 @@ const flowersData = [
     }
 ];
 
-// Глобальные переменные
+
 let currentFlowerIndex = 0;
 let flowersInVase = 0;
 let activeFlower = null;
 let currentFlowerElement = null;
 
-// Инициализация при загрузке
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Инициализация приложения...');
     initializeFlowers();
     setupEventListeners();
     
-    // Проверка загрузки изображений
+
     checkImages();
 });
 
-// Проверка загрузки изображений
+
 function checkImages() {
     const images = document.querySelectorAll('.real-image');
     images.forEach(img => {
         img.onerror = function() {
             console.error('❌ Не загружено изображение:', img.src);
-            // Показываем отладочную информацию
+     
             const debugInfo = img.parentElement.querySelector('.debug-info');
             if (debugInfo) debugInfo.style.display = 'block';
         };
@@ -76,7 +76,7 @@ function checkImages() {
     });
 }
 
-// Инициализация цветков
+
 function initializeFlowers() {
     const container = document.getElementById('flowers-container');
     container.innerHTML = '';
@@ -89,7 +89,7 @@ function initializeFlowers() {
         flowerEl.dataset.id = flower.id;
         flowerEl.dataset.index = index;
         
-        // Добавляем отладочную информацию
+
         const debugInfo = document.createElement('div');
         debugInfo.className = 'debug-info';
         debugInfo.textContent = flower.img;
@@ -104,26 +104,26 @@ function initializeFlowers() {
     console.log(`🌸 Инициализировано ${flowersData.length} цветков`);
 }
 
-// Настройка обработчиков событий
+
 function setupEventListeners() {
-    // Начальный экран
+
     document.getElementById('gift-box').addEventListener('click', openGift);
     document.getElementById('gift-box').addEventListener('touchstart', openGift, { passive: true });
     
-    // Букет в обертке
+ 
     document.getElementById('ribbon').addEventListener('click', removeRibbon);
     document.getElementById('ribbon').addEventListener('touchstart', removeRibbon, { passive: true });
     
     document.getElementById('bouquet-wrapped').addEventListener('click', removeWrapper);
     document.getElementById('bouquet-wrapped').addEventListener('touchstart', removeWrapper, { passive: true });
     
-    // Модальное окно
+
     document.getElementById('move-to-vase-btn').addEventListener('click', prepareFlowerForMoving);
     
     console.log('✅ Все обработчики событий установлены');
 }
 
-// Функции переключения экранов
+
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
@@ -147,36 +147,36 @@ function removeWrapper() {
     console.log('📦 Разворачиваем букет...');
     showScreen('screen-bouquet-unwrapped');
     
-    // Показываем первый цветок через небольшую задержку
+ 
     setTimeout(() => {
         showNextFlower();
     }, 800);
 }
 
-// Работа с цветками
+
 function showNextFlower() {
     if (currentFlowerIndex < flowersData.length) {
         const flowers = document.querySelectorAll('.flower');
         const currentFlower = flowers[currentFlowerIndex];
         
-        // Активируем текущий цветок
+ 
         currentFlower.classList.add('shaking');
         currentFlower.style.cursor = 'pointer';
         
-        // ВЕШАЕМ ОБРАБОТЧИКИ КЛИКА НА ЦВЕТОК
+
         setupFlowerClickHandlers(currentFlower);
         
         console.log(`🌺 Показываем цветок ${currentFlowerIndex + 1}`);
     }
 }
 
-// Функция для установки обработчиков на цветки
+
 function setupFlowerClickHandlers(flowerElement) {
-    // Удаляем старые обработчики (если есть)
+  
     const newFlowerElement = flowerElement.cloneNode(true);
     flowerElement.parentNode.replaceChild(newFlowerElement, flowerElement);
     
-    // Добавляем новые обработчики
+
     newFlowerElement.addEventListener('click', function() {
         const flowerId = parseInt(this.dataset.id);
         const flowerData = flowersData.find(f => f.id === flowerId);
@@ -210,24 +210,23 @@ function prepareFlowerForMoving() {
     console.log(`🔄 Подготавливаем цветок к перемещению: ${activeFlower.title}`);
     document.getElementById('flower-modal').style.display = 'none';
     
-    // Находим элемент цветка
+
     currentFlowerElement = document.querySelector(`.flower[data-id="${activeFlower.id}"]`);
     currentFlowerElement.classList.remove('shaking');
     currentFlowerElement.classList.add('selected');
     
-    // УДАЛЯЕМ старые обработчики клика, чтобы не открывалась модалка
+
     const newFlowerElement = currentFlowerElement.cloneNode(true);
     currentFlowerElement.parentNode.replaceChild(newFlowerElement, currentFlowerElement);
     currentFlowerElement = newFlowerElement;
     
-    // Делаем вазу активной для дропа
+
     const vase = document.getElementById('vase');
     vase.classList.add('drop-target');
     
-    // Показываем подсказку
+
     showDragHint();
     
-    // Подготавливаем к перетаскиванию
     setupFlowerDrag(currentFlowerElement);
 }
 
@@ -239,25 +238,25 @@ function showDragHint() {
     }, 3000);
 }
 
-// Система перетаскивания
+
 function setupFlowerDrag(flowerElement) {
     let isDragging = false;
     let startX, startY;
     
-    // Устанавливаем курсор
+
     flowerElement.style.cursor = 'grab';
     
-    // Touch события
+
     flowerElement.addEventListener('touchstart', handleTouchStart, { passive: false });
     flowerElement.addEventListener('touchmove', handleTouchMove, { passive: false });
     flowerElement.addEventListener('touchend', handleTouchEnd);
     
-    // Mouse события
+
     flowerElement.addEventListener('mousedown', handleMouseStart);
     
     function handleTouchStart(e) {
         e.preventDefault();
-        e.stopPropagation(); // Важно: останавливаем всплытие
+        e.stopPropagation(); 
         const touch = e.touches[0];
         startDrag(touch.clientX, touch.clientY);
     }
@@ -335,7 +334,7 @@ function setupFlowerDrag(flowerElement) {
         const flowerRect = flowerElement.getBoundingClientRect();
         const vaseRect = vase.getBoundingClientRect();
         
-        // Проверяем пересечение с вазой
+
         if (isOverlapping(flowerRect, vaseRect)) {
             console.log('✅ Цветок помещен в вазу');
             placeFlowerInVase(flowerElement, activeFlower);
@@ -383,10 +382,10 @@ function resetFlowerPosition(flowerElement) {
 function placeFlowerInVase(flowerElement, flowerData) {
     console.log(`🏺 Помещаем цветок в вазу: ${flowerData.title}`);
     
-    // Анимация исчезновения
+
     flowerElement.classList.add('in-vase');
     
-    // Сбрасываем стили вазы
+
     const vase = document.getElementById('vase');
     vase.classList.remove('drop-target');
     vase.style.transform = '';
@@ -396,27 +395,27 @@ function placeFlowerInVase(flowerElement, flowerData) {
         flowerElement.style.display = 'none';
         flowersInVase++;
         
-        // Переходим к следующему цветку
+
         currentFlowerIndex++;
         
         if (currentFlowerIndex < flowersData.length) {
             setTimeout(showNextFlower, 500);
         } else {
-            // Все цветки собраны - показываем финальный экран
+          
             setTimeout(showFinalBouquet, 800);
         }
     }, 300);
 }
 
 function showFinalBouquet() {
-    console.log('🎉 Показываем финальный букет!');
+    console.log('финальный букет!');
     showScreen('screen-final');
     
     const phrasesContainer = document.getElementById('phrases-container');
     phrasesContainer.innerHTML = '';
     
-    // Добавляем все фразы из цветков
-    flowersData.forEach((flower, index) => {
+
+        flowersData.forEach((flower, index) => {
         const phraseEl = document.createElement('div');
         phraseEl.className = 'phrase-item fade-in';
         phraseEl.textContent = flower.phrase;
@@ -426,11 +425,12 @@ function showFinalBouquet() {
     });
 }
 
-// Предотвращаем стандартное поведение браузера для touch событий
+
 document.addEventListener('touchmove', function(e) {
     if (e.target.classList.contains('flower')) {
         e.preventDefault();
     }
 }, { passive: false });
 
-console.log('🎁 Приложение инициализировано и готово к работе!');
+console.log('приложение инициализировано');
+
