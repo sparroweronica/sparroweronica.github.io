@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Подсказка для перетаскивания -->
+   
     <div class="drag-hint" id="drag-hint">Перетащи цветок в вазу 💫</div>
 
-    <!-- ЭКРАН 1: Начальный -->
+
     <div id="screen-intro" class="screen active">
         <div class="intro-container">
             <div class="daughter-section">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 2: Букет в обертке -->
+
     <div id="screen-bouquet-wrapped" class="screen">
         <p class="instruction">Раскрой упаковку и узнай что подарочек хочет тебе сказать</p>
         <div class="bouquet-container">
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 3: Цветы без обертки -->
+
     <div id="screen-bouquet-unwrapped" class="screen">
         <p class="instruction">Нажми на цветочек! А после перетащи его в вазу</p>
         <div class="flowers-container" id="flowers-container">
@@ -46,23 +46,23 @@
         <div class="debug-info">images/vase.png</div>
     </div>
 
-    <!-- ЭКРАН 4: Финальный букет -->
+
     <div id="screen-final" class="screen">
         <p class="final-message">Воть твой букетик! Он красивый и многогранный, как и ты!</p>
         
-        <!-- Контейнер для фраз -->
+
         <div class="phrases-container" id="phrases-container">
-            <!-- Фразы будут добавляться скриптом -->
+
         </div>
         
-        <!-- Финальное изображение букета -->
+
         <div class="final-image-container">
             <img src="images/vase-with-flowers.png" alt="Ваза с цветами" id="final-bouquet-image" class="real-image">
             <div class="debug-info">images/vase-with-flowers.png</div>
         </div>
     </div>
 
-    <!-- Карточка описания цветка -->
+
     <div id="flower-modal" class="modal">
         <div class="modal-content">
             <h2 id="flower-title">Название цветка</h2>
@@ -78,7 +78,7 @@
 
 
 
-// Данные о цветках с реальными изображениями
+
 const flowersData = [
     {
         id: 1,
@@ -124,39 +124,39 @@ const flowersData = [
     }
 ];
 
-// Глобальные переменные
+
 let currentFlowerIndex = 0;
 let flowersInVase = 0;
 let activeFlower = null;
 let currentFlowerElement = null;
 
-// Инициализация при загрузке
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Инициализация приложения...');
+    console.log('Инициализация ');
     initializeFlowers();
     setupEventListeners();
     
-    // Проверка загрузки изображений
+
     checkImages();
 });
 
-// Проверка загрузки изображений
+
 function checkImages() {
     const images = document.querySelectorAll('.real-image');
     images.forEach(img => {
         img.onerror = function() {
-            console.error('❌ Не загружено изображение:', img.src);
+            console.error(' Не загружено изображение:', img.src);
             // Показываем отладочную информацию
             const debugInfo = img.parentElement.querySelector('.debug-info');
             if (debugInfo) debugInfo.style.display = 'block';
         };
         img.onload = function() {
-            console.log('✅ Загружено:', img.src);
+            console.log('Загружено:', img.src);
         };
     });
 }
 
-// Инициализация цветков
+
 function initializeFlowers() {
     const container = document.getElementById('flowers-container');
     container.innerHTML = '';
@@ -181,53 +181,53 @@ function initializeFlowers() {
         
         container.appendChild(wrapper);
     });
-    console.log(`🌸 Инициализировано ${flowersData.length} цветков`);
+    console.log(`Инициализировано ${flowersData.length} цветков`);
 }
 
-// Настройка обработчиков событий
+
 function setupEventListeners() {
-    // Начальный экран
+
     document.getElementById('gift-box').addEventListener('click', openGift);
     document.getElementById('gift-box').addEventListener('touchstart', openGift, { passive: true });
     
-    // Букет в обертке
+
     document.getElementById('ribbon').addEventListener('click', removeRibbon);
     document.getElementById('ribbon').addEventListener('touchstart', removeRibbon, { passive: true });
     
     document.getElementById('bouquet-wrapped').addEventListener('click', removeWrapper);
     document.getElementById('bouquet-wrapped').addEventListener('touchstart', removeWrapper, { passive: true });
     
-    // Модальное окно
+
     document.getElementById('move-to-vase-btn').addEventListener('click', prepareFlowerForMoving);
     
-    console.log('✅ Все обработчики событий установлены');
+    console.log('Все обработчики установлены');
 }
 
-// Функции переключения экранов
+
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
-    console.log(`📱 Переключено на экран: ${screenId}`);
+    console.log(`Переключено на экран: ${screenId}`);
 }
 
 function openGift() {
-    console.log('🎁 Открываем подарок...');
+    console.log('Открываем подарок');
     showScreen('screen-bouquet-wrapped');
 }
 
 function removeRibbon() {
-    console.log('🎀 Убираем ленточку...');
+    console.log('нбираем ленточку');
     document.getElementById('ribbon').style.display = 'none';
     document.getElementById('bouquet-wrapped').classList.add('shaking');
 }
 
 function removeWrapper() {
-    console.log('📦 Разворачиваем букет...');
+    console.log('Разворачиваем букет');
     showScreen('screen-bouquet-unwrapped');
     
-    // Показываем первый цветок через небольшую задержку
+
     setTimeout(() => {
         showNextFlower();
     }, 800);
@@ -239,24 +239,24 @@ function showNextFlower() {
         const flowers = document.querySelectorAll('.flower');
         const currentFlower = flowers[currentFlowerIndex];
         
-        // Активируем текущий цветок
+
         currentFlower.classList.add('shaking');
         currentFlower.style.cursor = 'pointer';
         
-        // ВЕШАЕМ ОБРАБОТЧИКИ КЛИКА НА ЦВЕТОК
+
         setupFlowerClickHandlers(currentFlower);
         
-        console.log(`🌺 Показываем цветок ${currentFlowerIndex + 1}`);
+        console.log(`цветок ${currentFlowerIndex + 1}`);
     }
 }
 
-// Функция для установки обработчиков на цветки
+
 function setupFlowerClickHandlers(flowerElement) {
-    // Удаляем старые обработчики (если есть)
+
     const newFlowerElement = flowerElement.cloneNode(true);
     flowerElement.parentNode.replaceChild(newFlowerElement, flowerElement);
     
-    // Добавляем новые обработчики
+
     newFlowerElement.addEventListener('click', function() {
         const flowerId = parseInt(this.dataset.id);
         const flowerData = flowersData.find(f => f.id === flowerId);
@@ -278,7 +278,7 @@ function setupFlowerClickHandlers(flowerElement) {
 }
 
 function openFlowerModal(flowerData) {
-    console.log(`📖 Открываем описание: ${flowerData.title}`);
+    console.log(`описание: ${flowerData.title}`);
     activeFlower = flowerData;
     
     document.getElementById('flower-title').textContent = flowerData.title;
@@ -287,27 +287,27 @@ function openFlowerModal(flowerData) {
 }
 
 function prepareFlowerForMoving() {
-    console.log(`🔄 Подготавливаем цветок к перемещению: ${activeFlower.title}`);
+    console.log(` цветок к перемещению: ${activeFlower.title}`);
     document.getElementById('flower-modal').style.display = 'none';
     
-    // Находим элемент цветка
+
     currentFlowerElement = document.querySelector(`.flower[data-id="${activeFlower.id}"]`);
     currentFlowerElement.classList.remove('shaking');
     currentFlowerElement.classList.add('selected');
     
-    // УДАЛЯЕМ старые обработчики клика, чтобы не открывалась модалка
+
     const newFlowerElement = currentFlowerElement.cloneNode(true);
     currentFlowerElement.parentNode.replaceChild(newFlowerElement, currentFlowerElement);
     currentFlowerElement = newFlowerElement;
     
-    // Делаем вазу активной для дропа
+
     const vase = document.getElementById('vase');
     vase.classList.add('drop-target');
     
-    // Показываем подсказку
+
     showDragHint();
     
-    // Подготавливаем к перетаскиванию
+
     setupFlowerDrag(currentFlowerElement);
 }
 
@@ -319,20 +319,20 @@ function showDragHint() {
     }, 3000);
 }
 
-// Система перетаскивания
+
 function setupFlowerDrag(flowerElement) {
     let isDragging = false;
     let startX, startY;
     
-    // Устанавливаем курсор
+
     flowerElement.style.cursor = 'grab';
     
-    // Touch события
+
     flowerElement.addEventListener('touchstart', handleTouchStart, { passive: false });
     flowerElement.addEventListener('touchmove', handleTouchMove, { passive: false });
     flowerElement.addEventListener('touchend', handleTouchEnd);
     
-    // Mouse события
+
     flowerElement.addEventListener('mousedown', handleMouseStart);
     
     function handleTouchStart(e) {
@@ -388,7 +388,7 @@ function setupFlowerDrag(flowerElement) {
         flowerElement.style.left = rect.left + 'px';
         flowerElement.style.top = rect.top + 'px';
         
-        console.log('🎯 Начали перетаскивание');
+        console.log('Начали перетаскивание');
     }
     
     function updateDrag(clientX, clientY) {
@@ -417,10 +417,10 @@ function setupFlowerDrag(flowerElement) {
         
         // Проверяем пересечение с вазой
         if (isOverlapping(flowerRect, vaseRect)) {
-            console.log('✅ Цветок помещен в вазу');
+            console.log('Цветок помещен');
             placeFlowerInVase(flowerElement, activeFlower);
         } else {
-            console.log('❌ Цветок не дошел до вазы');
+            console.log(' Цветок не дошел');
             resetFlowerPosition(flowerElement);
         }
     }
@@ -457,16 +457,16 @@ function resetFlowerPosition(flowerElement) {
     vase.style.transform = '';
     vase.style.borderColor = '';
     
-    console.log('🔄 Цветок возвращен на место');
+    console.log('Цветок возвращен');
 }
 
 function placeFlowerInVase(flowerElement, flowerData) {
-    console.log(`🏺 Помещаем цветок в вазу: ${flowerData.title}`);
+    console.log(`Помещаем цветок в вазу: ${flowerData.title}`);
     
-    // Анимация исчезновения
+    
     flowerElement.classList.add('in-vase');
     
-    // Сбрасываем стили вазы
+
     const vase = document.getElementById('vase');
     vase.classList.remove('drop-target');
     vase.style.transform = '';
@@ -476,13 +476,13 @@ function placeFlowerInVase(flowerElement, flowerData) {
         flowerElement.style.display = 'none';
         flowersInVase++;
         
-        // Переходим к следующему цветку
+      
         currentFlowerIndex++;
         
         if (currentFlowerIndex < flowersData.length) {
             setTimeout(showNextFlower, 500);
         } else {
-            // Все цветки собраны - показываем финальный экран
+            //вссе цветки собраны - показываем финальный экран
             setTimeout(showFinalBouquet, 800);
         }
     }, 300);
@@ -495,7 +495,7 @@ function showFinalBouquet() {
     const phrasesContainer = document.getElementById('phrases-container');
     phrasesContainer.innerHTML = '';
     
-    // Добавляем все фразы из цветков
+
     flowersData.forEach((flower, index) => {
         const phraseEl = document.createElement('div');
         phraseEl.className = 'phrase-item fade-in';
@@ -506,14 +506,14 @@ function showFinalBouquet() {
     });
 }
 
-// Предотвращаем стандартное поведение браузера для touch событий
+
 document.addEventListener('touchmove', function(e) {
     if (e.target.classList.contains('flower')) {
         e.preventDefault();
     }
 }, { passive: false });
 
-console.log('🎁 Приложение инициализировано и готово к работе!');
+console.log('инициализировано');
 
 /* Базовые стили */
 * {
@@ -541,7 +541,7 @@ body {
     touch-action: manipulation;
 }
 
-/* Временные стили для отладки изображений */
+
 .debug-info {
     position: absolute;
     top: 5px;
@@ -554,7 +554,7 @@ body {
     display: none;
 }
 
-/* Стили для финального экрана */
+
 .phrases-container {
     display: flex;
     flex-direction: column;
@@ -592,7 +592,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Индикатор перетаскивания */
+
 .drag-hint {
     position: fixed;
     top: 50%;
@@ -608,7 +608,7 @@ body {
     display: none;
 }
 
-/* Адаптивность для iPhone */
+
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -619,7 +619,7 @@ body {
     }
 }
 
-/* Общие стили экранов */
+
 .screen {
     display: none;
     flex-direction: column;
@@ -636,7 +636,7 @@ body {
     opacity: 1;
 }
 
-/* Анимация тряски */
+
 @keyframes gentleShake {
     0%, 100% { transform: translateX(0) rotate(0deg); }
     25% { transform: translateX(-2px) rotate(-0.5deg); }
@@ -648,7 +648,7 @@ body {
     cursor: pointer;
 }
 
-/* Плавные переходы */
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -658,7 +658,7 @@ body {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* ЭКРАН 1: Начальный */
+
 .intro-container {
     display: flex;
     flex-direction: column;
@@ -703,7 +703,7 @@ body {
     transform: scale(0.95);
 }
 
-/* ЭКРАН 2: Букет в обертке */
+
 .instruction {
     font-size: 1.3em;
     margin-bottom: 40px;
@@ -738,7 +738,7 @@ body {
     z-index: 2;
 }
 
-/* ЭКРАН 3: Цветы без обертки */
+
 .flowers-container {
     display: flex;
     flex-wrap: wrap;
@@ -795,7 +795,7 @@ body {
     transform: scale(1.05);
 }
 
-/* ЭКРАН 4: Финальный */
+
 .final-message {
     font-size: 1.5em;
     margin-bottom: 30px;
@@ -805,7 +805,7 @@ body {
     border-radius: 30px;
 }
 
-/* Модальное окно */
+
 .modal {
     display: none;
     position: fixed;
@@ -861,39 +861,4 @@ body {
     background: #7d9944;
 }
 
-/* Адаптивность для очень маленьких экранов */
-@media (max-width: 480px) {
-    .daughter-photo {
-        width: 140px;
-        height: 140px;
-    }
-    
-    .gift-box {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .bouquet-wrapped {
-        width: 280px;
-        height: 350px;
-    }
-    
-    .flower {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .final-message {
-        font-size: 1.3em;
-        padding: 15px 20px;
-    }
-    
-    .vase {
-        width: 180px;
-        height: 180px;
-    }
-    
-    #final-bouquet-image {
-        max-width: 300px;
-    }
-}
+
