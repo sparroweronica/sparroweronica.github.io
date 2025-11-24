@@ -1,4 +1,4 @@
-/* Базовые стили */
+
 * {
     margin: 0;
     padding: 0;
@@ -24,7 +24,7 @@ body {
     touch-action: manipulation;
 }
 
-/* Временные стили для отладки изображений */
+
 .debug-info {
     position: absolute;
     top: 5px;
@@ -37,7 +37,7 @@ body {
     display: none;
 }
 
-/* Стили для финального экрана */
+
 .phrases-container {
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Индикатор перетаскивания */
+
 .drag-hint {
     position: fixed;
     top: 50%;
@@ -91,7 +91,7 @@ body {
     display: none;
 }
 
-/* Адаптивность для iPhone */
+
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -102,7 +102,7 @@ body {
     }
 }
 
-/* Общие стили экранов */
+
 .screen {
     display: none;
     flex-direction: column;
@@ -119,7 +119,7 @@ body {
     opacity: 1;
 }
 
-/* Анимация тряски */
+
 @keyframes gentleShake {
     0%, 100% { transform: translateX(0) rotate(0deg); }
     25% { transform: translateX(-2px) rotate(-0.5deg); }
@@ -131,7 +131,7 @@ body {
     cursor: pointer;
 }
 
-/* Плавные переходы */
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -141,7 +141,7 @@ body {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* ЭКРАН 1: Начальный */
+
 .intro-container {
     display: flex;
     flex-direction: column;
@@ -186,7 +186,7 @@ body {
     transform: scale(0.95);
 }
 
-/* ЭКРАН 2: Букет в обертке */
+
 .instruction {
     font-size: 1.3em;
     margin-bottom: 40px;
@@ -221,7 +221,7 @@ body {
     z-index: 2;
 }
 
-/* ЭКРАН 3: Цветы без обертки */
+
 .flowers-container {
     display: flex;
     flex-wrap: wrap;
@@ -278,7 +278,7 @@ body {
     transform: scale(1.05);
 }
 
-/* ЭКРАН 4: Финальный */
+
 .final-message {
     font-size: 1.5em;
     margin-bottom: 30px;
@@ -288,7 +288,7 @@ body {
     border-radius: 30px;
 }
 
-/* Модальное окно */
+
 .modal {
     display: none;
     position: fixed;
@@ -342,41 +342,4 @@ body {
 
 #move-to-vase-btn:hover {
     background: #7d9944;
-}
-
-/* Адаптивность для очень маленьких экранов */
-@media (max-width: 480px) {
-    .daughter-photo {
-        width: 140px;
-        height: 140px;
-    }
-    
-    .gift-box {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .bouquet-wrapped {
-        width: 280px;
-        height: 350px;
-    }
-    
-    .flower {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .final-message {
-        font-size: 1.3em;
-        padding: 15px 20px;
-    }
-    
-    .vase {
-        width: 180px;
-        height: 180px;
-    }
-    
-    #final-bouquet-image {
-        max-width: 300px;
-    }
 }
